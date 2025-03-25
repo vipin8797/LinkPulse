@@ -200,25 +200,25 @@ app.use((req, res, next) => {
 
 //User Routes to login or signup
 // Step 1: Redirect user to Google login page
-// app.get("/auth/google", passport.authenticate("google", { scope: ["profile"] }));
+app.get("/auth/google", passport.authenticate("google", { scope: ["profile"] }));
 
-// // Step 2: Google se redirect hone ke baad callback route
-// app.get(
-//     "/auth/google/callback",
-//     passport.authenticate("google", { failureRedirect: "/api/shortUrl" }),
-//     (req, res) => {
-//       res.redirect('/api/shortUrl'); // Successful login ke baad home page pe redirect
-//     }
-//   );
+// Step 2: Google se redirect hone ke baad callback route
+app.get(
+    "/auth/google/callback",
+    passport.authenticate("google", { failureRedirect: "/api/shortUrl" }),
+    (req, res) => {
+      res.redirect('/api/shortUrl'); // Successful login ke baad home page pe redirect
+    }
+  );
 
-// // Step 3: Logout route
-// app.get("/logout", (req, res) => {
-//     req.logout((err) => {
-//       if (err) return next(err);
-//     //   res.redirect("/");
-//     res.redirect('/api/shortUrl');
-//     });
-//   });
+// Step 3: Logout route
+app.get("/logout", (req, res) => {
+    req.logout((err) => {
+      if (err) return next(err);
+    //   res.redirect("/");
+    res.redirect('/api/shortUrl');
+    });
+  });
 
 
 
