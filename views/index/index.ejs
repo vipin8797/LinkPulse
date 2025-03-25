@@ -1,0 +1,250 @@
+<% layout("/layouts/boilerplate") %>
+
+<!-- Hero Section with Form -->
+<section class="hero-section">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card shadow p-4">
+          <h1 class="text-center mb-4">LinkPulse: Best Free URL Shortener Tool</h1>
+          <p class="text-center text-muted mb-4">Transform long URLs into short, shareable links instantly!</p>
+          
+          <form action="/api/shortUrl" method="POST">
+            <!-- Original URL -->
+            <div class="mb-3">
+              <label for="longUrl" class="form-label">Enter URL to Shorten</label>
+              <input type="url" class="form-control" id="longUrl" name="url[originalUrl]" required placeholder="https://example.com">
+            </div>
+
+            <!-- Custom Domain (Optional) -->
+            <div class="mb-3">
+              <label for="customDomain" class="form-label">Custom Domain (Optional)</label>
+              <input type="text" class="form-control" id="customDomain" name="url[customDomain]" placeholder='"mybrand.com"  Only this form is acceptable.'>
+            </div>
+
+            <!-- Expiration Date -->
+            <div class="mb-3">
+              <label for="expiry" class="form-label">Expiry</label>
+              <select class="form-select" id="expiry" name="url[expirationDate]" <%= user ? "" : "disabled" %>>
+                <% if (user && user.isLoggedIn) { %>
+                  <option value="">No Expiry</option>
+                  <option value="1d">1 Day</option>
+                  <option value="2d">2 Days</option>
+                  <option value="3d">3 Days</option>
+                  <option value="1w">1 Week</option>
+                  <option value="2w">2 Weeks</option>
+                  <option value="1m">1 Month</option>
+                <% } else { %>
+                  <option class="text-danger" selected disabled>Login for custom expiry date</option>
+                <% } %>
+              </select>
+            </div>
+
+            <!-- QR Code Option -->
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="generateQR" name="url[generateQR]" value="true">
+              <label class="form-check-label" for="generateQR">Generate QR Code</label>
+            </div>
+
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary btn-lg">Shorten Your URL Now</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section py-5">
+  <div class="container">
+    <h1 class="text-center mb-5">Why Choose LinkPulse URL Shortener?</h1>
+    <p class="text-center text-muted mb-5">Discover the best free features for shortening your URLs with LinkPulse.</p>
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="feature-card text-center p-4 shadow-sm">
+          <i class="fas fa-link fa-2x mb-3 text-primary"></i>
+          <h2>Fast & Free URL Shortening</h2>
+          <p>Shorten your URLs instantly with LinkPulse—completely free, no hidden costs.</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="feature-card text-center p-4 shadow-sm">
+          <i class="fas fa-qrcode fa-2x mb-3 text-primary"></i>
+          <h2>Custom Domains & QR Codes</h2>
+          <p>Create branded short links with custom domains and generate free QR codes for easy sharing.</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="feature-card text-center p-4 shadow-sm">
+          <i class="fas fa-chart-line fa-2x mb-3 text-primary"></i>
+          <h2>Track Your Links with Analytics</h2>
+          <p>Monitor performance with free analytics—see clicks and insights on your shortened URLs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Reviews Section -->
+<!-- Report URL Section -->
+<section class="report-section py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center mb-4">Report a Problem URL</h2>
+    <p class="text-center text-muted mb-4">Found a suspicious shortened URL? Help us keep <strong>LinkPulse</strong> safe!</p>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form action="/api/report" method="POST" class="shadow p-4 bg-white rounded">
+          <div class="mb-3">
+            <label for="reportUrl" class="form-label">Enter the Short URL</label>
+            <input type="url" class="form-control" id="reportUrl" name="reportUrl" placeholder="e.g., https://linkpulse.com/abc123" required>
+          </div>
+          <div class="mb-3">
+            <label for="reason" class="form-label">Reason for Reporting</label>
+            <textarea class="form-control" id="reason" name="reason" rows="3" placeholder="Describe the issue (e.g., spam, malware)" required></textarea>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">Report URL</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <p class="text-center mt-4">Learn more about our free <strong>URL shortener</strong> on our <a href="/api/about">About page</a>.</p>
+  </div>
+</section>
+
+<style>
+  /* Hero Section */
+  .hero-section {
+    padding: 60px 0;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  }
+  .hero-section h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a2b3c;
+  }
+  .hero-section p {
+    font-size: 1.2rem;
+    color: #6c757d;
+  }
+  .hero-section .card {
+    border-radius: 15px;
+    background: #fff;
+    border: none;
+  }
+  .btn-primary {
+    background: linear-gradient(90deg, #007bff, #00c6ff);
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+  }
+  .btn-primary:hover {
+    transform: scale(1.05);
+    background: linear-gradient(90deg, #0056b3, #0096cc);
+  }
+
+  /* Features Section */
+  .features-section {
+    padding: 60px 0;
+  }
+  .features-section h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a2b3c;
+  }
+  .features-section p {
+    font-size: 1.2rem;
+    color: #6c757d;
+  }
+  .feature-card {
+    border-radius: 15px;
+    background: #fff;
+    transition: all 0.3s ease;
+  }
+  .feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  .feature-card h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1a2b3c;
+  }
+  .feature-card p {
+    font-size: 1rem;
+    color: #6c757d;
+  }
+  .feature-card i {
+    font-size: 2.5rem; /* Slightly larger icons */
+  }
+
+  /* Reviews Section */
+  .reviews-section {
+    padding: 60px 0;
+    background: #f8f9fa;
+  }
+  .reviews-section h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a2b3c;
+  }
+  .reviews-section p {
+    font-size: 1.2rem;
+    color: #6c757d;
+  }
+  .review-card {
+    border-radius: 15px;
+    background: #fff;
+    border: none;
+  }
+  .review-card p {
+    font-size: 1rem;
+    color: #6c757d;
+  }
+  .review-card .fw-bold {
+    font-size: 1.1rem;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    padding: 60px 0;
+    background: linear-gradient(90deg, #007bff, #ff007b); /* Bolder gradient */
+  }
+  .cta-section h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+  .cta-section p {
+    font-size: 1.2rem;
+  }
+  .btn-light {
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  .btn-light:hover {
+    background: #f8f9fa;
+    transform: scale(1.05);
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .hero-section h1, .features-section h1, .reviews-section h1, .cta-section h1 {
+      font-size: 2rem;
+    }
+    .hero-section p, .features-section p, .reviews-section p, .cta-section p {
+      font-size: 1rem;
+    }
+    .hero-section { padding: 40px 0; }
+    .features-section { padding: 40px 0; }
+    .reviews-section { padding: 40px 0; }
+    .cta-section { padding: 40px 0; }
+    .feature-card, .review-card { margin-bottom: 20px; }
+    .btn-primary, .btn-light { font-size: 1rem; padding: 10px 25px; }
+    .feature-card i { font-size: 2rem; }
+  }
+</style>
