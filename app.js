@@ -171,7 +171,7 @@ app.use((req, res, next) => {
         userImage: '/icons/default_image.png' 
       };
 //   console.log('Middleware res.locals.user:', res.locals.user);
-//   console.log(req.files); 
+   console.log("getting req"); 
   next();
  });
 
